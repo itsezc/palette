@@ -1,0 +1,15 @@
+{
+	"name": "@foretag/mix",
+	"version": "0.1.0",
+	"description": "",
+	"main": "source/index.ts",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"bun-types": "^0.1.0"
+	},
+	"peerDependencies": {
+		"react": "18.2.0"
+	}
+}
