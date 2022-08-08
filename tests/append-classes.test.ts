@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'bun:test';
-import { mix } from '@/source';
+import { createPalette } from '@/source';
 
 interface IMockButtonProps {
 	label: string,
@@ -13,8 +13,19 @@ interface IMockButtonProps {
 
 describe('CSS', () => {
 	/** Mock classes using MasterCSS */
-	const classes = mix<IMockButtonProps>({
-		base: 'r:4 b:1|solid|gray-86 f:semibold ~all|100ms|ease p:10|15 f:14|semibold {bg:gray-80}:hover outline:none',
+	const { mix } = createPalette([
+		{
+			name: 'screen',
+			tokens: {
+				radius: {
+					default: 4
+				}
+			}
+		}
+	]);
+
+	const classes = mix<IMockButtonProps>(({ tokens }) => ({
+		base: `r:${tokens.radius.default} b:1|solid|gray-86 f:semibold ~all|100ms|ease p:10|15 f:14|semibold {bg:gray-80}:hover outline:none`,
 		variants: {
 			uppercase: 't:uppercase',
 			disabled: 'cursor:not-allowed',
@@ -23,7 +34,7 @@ describe('CSS', () => {
 			borderless: 'b:none',
 			rounded: 'rounded',
 		}
-	});
+	}));
 
 	let generateProps = classes({
 		label: 'Button', disabled: true, uppercase: false,

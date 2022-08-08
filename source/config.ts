@@ -1,10 +1,57 @@
-import type { IPalette, Parameters } from './type';
+interface IPalette<T> {
+	name: string;
+	tokens?: T;
+};
 
-type mixArgs<X, Y> = (theme?: IPalette) => Parameters<X, Y> | Parameters<X, Y>;
+interface Parameters<Props, Propless> {
+	readonly base?: string;
+	readonly variants?: Propless extends null ? Partial<{ [Key in keyof Props]: Props[Key] extends string | undefined ? Partial<{ [Value in Extract<Props[Key], string>]: string }> : string }> : Propless
+	readonly compounds?: Array<[Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean }>, string]>,
+};
 
-export const createPalette = (theme: IPalette) => {
-	const mix = <Props = null, Propless = null>(arg: mixArgs<Props, Propless>) => {
+type mixArgs<X, Y, T> = ((theme?: IPalette<T>) => Parameters<X, Y>) | Parameters<X, Y>;
+type mixFunction<T> = <Props = null, Propless = null>(arg: mixArgs<Props, Propless, T>) => (props?: Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean; }>) => string;
 
+export const createPalette = <T>(theme?: IPalette<T>[]): { mix: mixFunction<T>, theme: IPalette<T>[] } => {
+	const mix = <Props = null, Propless = null>(arg: mixArgs<Props, Propless, T>) => {
+		// TODO: implement select theme based on React Context
+		const { base, variants, compounds } = arg instanceof Function ? arg(theme[0]) : arg;
+
+		return (props?: Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean }>) => {
+			const classes = base ? [...base.split(' ')] : [];
+
+			if (props) {
+				if (variants) {
+					let variantKeys = Object.keys(props);
+					for (let i = 0; i < variantKeys.length; i++) {
+						const [key, value] = [variantKeys[i], props[variantKeys[i]]];
+						const vari: unknown = variants as unknown;
+
+						if (typeof variants[key as keyof typeof variants] === 'string' && value === true)
+							classes.push(...(variants[key as keyof typeof variants] as string).split(' '));
+						else if (typeof variants[key as keyof typeof variants] === 'object'
+							&& variants[key as keyof typeof variants][value as keyof { [key in keyof typeof vari]: typeof variants[key] }])
+							classes.push(...(variants[key as keyof typeof variants][value as keyof { [key in keyof typeof vari]: typeof variants[key] }] as string).split(' '));
+					};
+				}
+
+				if (compounds)
+					for (let i = 0; i < compounds.length; i++) {
+						const entries = Object.entries(compounds[i][0]);
+						let matches = 0;
+
+						entries.forEach(([key, value]) => {
+							props[key as keyof typeof props] === value && matches++;
+						});
+
+						if (entries.length === matches) {
+							classes.push(...compounds[i][1].split(' '));
+						}
+					}
+			}
+
+			return classes.join(' ').trim();
+		}
 	};
 
 	return {
