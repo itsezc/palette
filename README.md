@@ -15,7 +15,8 @@ Deliver a consistent visual identity across your apps with design tokens, with y
 ## Usage
 
 ```tsx
-import { createPalette, PaletteContext } from '@foretag/palette';
+import { createPalette, PaletteContext, usePalette } from '@foretag/palette';
+import { FC } from 'react';
 
 // Themes
 const light = {
@@ -54,7 +55,30 @@ const App = () => (
 	<PaletteContext palette={palette}>
 		<App />
 	</PaletteContext>
-)
+);
+
+interface IButtonProps {
+	disabled: boolean;
+}
+
+const Button: FC<IButtonProps> = (props) => {
+	const { mix } = usePalette();
+
+	const classes = mix<IButtonProps>((theme) => ({
+		base: 'bg:white f:blue',
+		variants: {
+			disabled: `bg:red f:${theme.colors.primary}`,
+		}
+	}));
+
+	return (
+		<button
+			className={classes(props)}
+		>
+			Button
+		</button>
+	);
+}
 ```
 
 ## Tests
