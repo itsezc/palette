@@ -1,2 +1,2 @@
 export { createPalette } from './palette';
-export { PaletteProvider } from './context';
+export { createPaletteContext } from './context';
