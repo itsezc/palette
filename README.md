@@ -52,7 +52,7 @@ const palette = createPalette([
 ]);
 
 const App = () => (
-	<PaletteContext palette={palette}>
+	<PaletteContext palette={palette} theme='light'>
 		<App />
 	</PaletteContext>
 );

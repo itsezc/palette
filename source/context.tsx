@@ -1,4 +1,5 @@
 import React, { useState, FC, PropsWithChildren } from 'react';
+import { createPalette } from './palette';
 import { IPalette, Tpalette, TmixFunction } from './types';
 
 interface IPaletteContext<
@@ -19,7 +20,7 @@ export const PaletteContext = React.createContext<IPaletteContext>(null);
 
 export const usePalette = () => React.useContext(PaletteContext);
 
-interface IPaletteProviderProps<T = null, A = null> {
+interface IPaletteProviderProps<T = {} | undefined, A = {} | undefined> {
 	palette: Tpalette<T, A>;
 	theme?: string;
 }
@@ -39,12 +40,3 @@ export const PaletteProvider: FC<PropsWithChildren<IPaletteProviderProps>> = ({ 
 		{children}
 	</PaletteContext.Provider>
 }
-
-const { mix } = usePalette();
-
-mix<{ disabled?: boolean }>((theme) => ({
-	base: 'bg:white',
-	variants: {
-		disabled: 'bg:gray-200',
-	}
-}));
