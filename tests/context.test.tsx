@@ -1,7 +1,11 @@
 import React, { FC } from 'react';
 import { describe, it, expect } from 'bun:test';
-import { createPalette, PaletteProvider } from '@/source';
-import { usePalette } from '@/source/context';
+import { createPalette } from '@/source';
+import { createPaletteContext } from '@/source/context';
+
+interface IButtonProps {
+	disabled: boolean;
+}
 
 describe('React - JSX / TSX', () => {
 	const palette = createPalette([
@@ -23,6 +27,8 @@ describe('React - JSX / TSX', () => {
 		},
 	]);
 
+	const { PaletteProvider, usePalette } = createPaletteContext(palette);
+
 	const App = () => {
 		return <PaletteProvider theme='light' palette={palette}>
 			<p>Test</p>
@@ -30,17 +36,13 @@ describe('React - JSX / TSX', () => {
 	}
 
 	it('Creates a palette', () => {
-		interface IButtonProps {
-			disabled: boolean;
-		}
-
 		const Button: FC<IButtonProps> = (props) => {
 			const { mix, setTheme } = usePalette();
 
-			const classes = mix<IButtonProps>((theme) => ({
+			const classes = mix<IButtonProps>(({ tokens }) => ({
 				base: 'bg:white f:blue',
 				variants: {
-					disabled: `bg:red f:${theme.colors.primary}`,
+					disabled: `bg:red f:${tokens.colors.primary}`,
 				}
 			}));
 
