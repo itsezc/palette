@@ -1,21 +1,13 @@
-interface IPalette<T> {
-	name: string;
-	tokens?: T;
-};
+import type {
+	IPalette,
+	TmixArgs,
+	TmixFunction,
+} from './types';
 
-interface Parameters<Props, Propless> {
-	readonly base?: string;
-	readonly variants?: Propless extends null ? Partial<{ [Key in keyof Props]: Props[Key] extends string | undefined ? Partial<{ [Value in Extract<Props[Key], string>]: string }> : string }> : Propless
-	readonly compounds?: Array<[Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean }>, string]>,
-};
-
-type mixArgs<X, Y, T> = ((theme?: IPalette<T>) => Parameters<X, Y>) | Parameters<X, Y>;
-type mixFunction<T> = <Props = null, Propless = null>(arg: mixArgs<Props, Propless, T>) => (props?: Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean; }>) => string;
-
-export const createPalette = <T>(palette?: IPalette<T>[]): { mix: mixFunction<T>, palette: IPalette<T>[] } => {
-	const mix = <Props = null, Propless = null>(arg: mixArgs<Props, Propless, T>) => {
+export const createPalette = <T, A>(palette?: IPalette<T, A>[]): { mix: TmixFunction<T, A>, palette: IPalette<T, A>[] } => {
+	const mix = <Props = null, Propless = null>(arg: TmixArgs<Props, Propless, T, A>) => {
 		// TODO: implement select theme based on React Context
-		const { base, variants, compounds } = arg instanceof Function ? arg(theme[0]) : arg;
+		const { base, variants, compounds } = arg instanceof Function ? arg(palette[0]) : arg;
 
 		return (props?: Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean }>) => {
 			const classes = base ? [...base.split(' ')] : [];

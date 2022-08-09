@@ -6,10 +6,11 @@ Deliver a consistent visual identity across your apps with design tokens, with y
 
 ## Features
 
-- Fully typed with TypeScript
+- Strongly typed end-to-end with TypeScript
 - First class React and Master CSS support
 - Minimal footprint: ~2KB with no dependencies
 - Production ready
+- Themes, change between themes on the fly
 
 ## Usage
 
@@ -59,3 +60,7 @@ const App = () => (
 ## Tests
 
 Palette is built with TypeScript and Bun, to run tests you need to run: `bun wiptest`
+
+## Development
+
+Palette is developed in TypeScript and is published on npm, it uses the Bun runtime for development and tests, but can be used in projects designed for other runtimes.
