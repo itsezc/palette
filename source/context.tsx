@@ -1,4 +1,4 @@
-import React, { useState, FC, PropsWithChildren } from 'react';
+import React, { useState, PropsWithChildren } from 'react';
 import { IPalette, Tpalette, TmixFunction } from './types';
 
 interface IPaletteContext<T = unknown, A = unknown> {
@@ -14,12 +14,12 @@ export const PaletteContext = React.createContext<IPaletteContext>(null);
 
 export const usePalette = () => React.useContext(PaletteContext);
 
-interface IPaletteProviderProps<T = {} | undefined, A = {} | undefined> {
+interface IPaletteProviderProps<T, A> {
 	palette: Tpalette<T, A>;
 	theme?: string;
 }
 
-export const PaletteProvider: FC<PropsWithChildren<IPaletteProviderProps>> = ({ children, palette, ...props }) => {
+export const PaletteProvider = <T, A>({ children, palette, ...props }: PropsWithChildren<IPaletteProviderProps<T, A>>) => {
 	let context = React.useContext(PaletteContext);
 
 	const { mix } = palette;
