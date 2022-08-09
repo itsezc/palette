@@ -6,10 +6,11 @@
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"devDependencies": {
-		"bun-types": "^0.1.0"
-	},
-	"peerDependencies": {
+	"dependencies": {
 		"react": "18.2.0"
+	},
+	"devDependencies": {
+		"bun-types": "^0.1.0",
+		"@types/react": "18.0.17"
 	}
 }

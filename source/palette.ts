@@ -12,7 +12,7 @@ interface Parameters<Props, Propless> {
 type mixArgs<X, Y, T> = ((theme?: IPalette<T>) => Parameters<X, Y>) | Parameters<X, Y>;
 type mixFunction<T> = <Props = null, Propless = null>(arg: mixArgs<Props, Propless, T>) => (props?: Partial<Propless extends null ? Props : { [Key in keyof Propless]: Propless[Key] extends object ? keyof Propless[Key] : boolean; }>) => string;
 
-export const createPalette = <T>(theme?: IPalette<T>[]): { mix: mixFunction<T>, theme: IPalette<T>[] } => {
+export const createPalette = <T>(palette?: IPalette<T>[]): { mix: mixFunction<T>, palette: IPalette<T>[] } => {
 	const mix = <Props = null, Propless = null>(arg: mixArgs<Props, Propless, T>) => {
 		// TODO: implement select theme based on React Context
 		const { base, variants, compounds } = arg instanceof Function ? arg(theme[0]) : arg;
@@ -56,6 +56,6 @@ export const createPalette = <T>(theme?: IPalette<T>[]): { mix: mixFunction<T>, 
 
 	return {
 		mix,
-		theme
+		palette
 	}
 };

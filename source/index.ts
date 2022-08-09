@@ -1,1 +1,1 @@
-export { createPalette } from './config';
+export { createPalette } from './palette';
