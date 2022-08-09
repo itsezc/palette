@@ -11,7 +11,7 @@ interface IPaletteContext<T, A> {
 };
 
 interface IPaletteProviderProps<T, A> {
-	palette: Tpalette<T, A>;
+	palette?: Tpalette<T, A>;
 	theme?: string;
 }
 
