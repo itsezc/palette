@@ -10,7 +10,7 @@ Deliver a consistent visual identity across your apps with design tokens, with y
 - First class React and Master CSS support
 - Minimal footprint: ~2KB with no dependencies
 - Production ready
-- Themes, change between themes on the fly
+- Dynamic themes, switch on the fly
 
 ## Usage
 

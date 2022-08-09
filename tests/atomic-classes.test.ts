@@ -11,14 +11,24 @@ interface IMockButtonProps {
 	isLoading: boolean,
 }
 
-describe('CSS', () => {
-	/** Mock classes using MasterCSS */
+describe('Palette', () => {
 	const { mix } = createPalette([
 		{
 			name: 'screen',
+			assets: {
+				logo: 'https://foret.ag/logo.png',
+			},
 			tokens: {
 				radius: {
 					default: 4
+				}
+			}
+		},
+		{
+			name: 'xr',
+			tokens: {
+				radius: {
+					default: 8
 				}
 			}
 		}
@@ -32,7 +42,7 @@ describe('CSS', () => {
 			isLoading: 'cursor:not-allowed',
 			bold: 'f:bold',
 			borderless: 'b:none',
-			rounded: 'rounded',
+			rounded: 'rounded'
 		}
 	}));
 
