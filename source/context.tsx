@@ -28,9 +28,9 @@ export const createPaletteContext = <T, A>(palette?: Tpalette<T, A>) => {
 
 		const [theme, updateTheme] = useState(props.theme ?? context?.theme ?? palette[0].name);
 
-		const setTheme = (theme: string) => {
-			// TODO: implement guard to prevent setting undefined theme or default to first theme
-			updateTheme(theme);
+		const setTheme = (newTheme: string) => {
+			if (context.palette.filter(p => p.name === theme).length > 0)
+				updateTheme(newTheme);
 		}
 
 		return <PaletteContext.Provider value={{ mix, theme, setTheme }}>

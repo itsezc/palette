@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { describe, it, expect } from 'bun:test';
-import { createPalette } from '@/source';
-import { createPaletteContext } from '@/source/context';
+import { createPalette, createPaletteContext } from '@/source';
 
 interface IButtonProps {
 	disabled: boolean;
