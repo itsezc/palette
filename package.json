@@ -1,5 +1,5 @@
 {
-	"name": "@foretag/mix",
+	"name": "@foretag/palette",
 	"version": "0.1.0",
 	"description": "",
 	"main": "source/index.ts",
