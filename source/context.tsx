@@ -1,14 +1,8 @@
 import React, { useState, FC, PropsWithChildren } from 'react';
-import { createPalette } from './palette';
 import { IPalette, Tpalette, TmixFunction } from './types';
 
-interface IPaletteContext<
-	Tokens = null,
-	Assets = null,
-	T = null,
-	A = null
-	> {
-	palette?: IPalette<Tokens, Assets>[];
+interface IPaletteContext<T = unknown, A = unknown> {
+	palette?: IPalette<T, A>[];
 	mix?: TmixFunction<T, A>;
 	theme?: string;
 
